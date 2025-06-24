@@ -5,6 +5,7 @@ import Error from "../Components/Error";
 import Register from "../Pages/Register";
 import OutletLayOut from "../Outlet/OutletLayOut";
 import SecretPrivate from "../Pages/SecretPrivate";
+import PrivateLock from "../Private/PrivateLock";
 // import Error from "../Components/Error";
 
 const Route = createBrowserRouter([
@@ -26,9 +27,16 @@ const Route = createBrowserRouter([
         path:'/register',
         element:<Register></Register>
       },
+      // {
+      //   path:'/secret',
+      //   element:
+      //       <SecretPrivate />       
+      // },
       {
         path:'/secret',
-        element:<SecretPrivate />
+        element:<PrivateLock>
+                     <SecretPrivate />
+                </PrivateLock>
       }
     ]
   }

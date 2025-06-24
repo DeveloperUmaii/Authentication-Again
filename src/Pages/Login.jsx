@@ -1,9 +1,15 @@
 import { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Authentication/AuthProvidor";
 
 const Login = () => {
     const { googleLogin, setUser, logInUser } = useContext(AuthContext);
+     const location = useLocation();
+     const navigate = useNavigate();
+          console.log('Login page location:---',location);
+       const from = location?.state?.from?.pathname || '/'
+
+
     const handleLogIn = (e) => {
         e.preventDefault();
         const form = e.target;
@@ -14,6 +20,8 @@ const Login = () => {
              .then(result =>{ 
                 setUser(result.user),
                 console.log(result.user)
+                 navigate(from, {replace:true});
+                 
              })
                .catch((error) => {
                  const errorCode = error.code;
@@ -25,9 +33,10 @@ const Login = () => {
 
     const handleGoogleLogin = () => {
         googleLogin()
-          .then((result) => 
+          .then((result) => {
                 setUser(result.user)
-            )
+                navigate(from, {replace:true});
+            })
           .catch((error) => { console.log(error.message)});
     }
     return (
@@ -82,12 +91,12 @@ const Login = () => {
                         </div>
 
                         <div className="form-control mt-6">
-                            <button type="submit" className="btn btn-neutral">Register</button>
+                            <button type="submit" className="btn btn-neutral">log In</button>
                         </div>
                     </form>
                     <div className="flex items-center justify-between mt-0 mb-2 mx-7">
                         <span className="w-1/5 border-b  lg:w-1/4"></span>
-                        <NavLink to='/register' className="text-xs text-center text-gray-500 uppercase  hover:underline">or  sign in</NavLink>
+                        <NavLink to='/register' className="text-xs text-center text-gray-500 uppercase  hover:underline"> Or Register</NavLink>
                         <span className="w-1/5 border-b dark:border-gray-400 lg:w-1/4"></span>
                     </div>
                 </div>
