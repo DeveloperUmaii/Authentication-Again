@@ -1,31 +1,40 @@
 import { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Authentication/AuthProvidor";
 
 const Register = () => {
-    const { createUserWithEmail, setUser } = useContext(AuthContext)
+    const { createUserWithEmail, setUser, upDateUserProfileNow } = useContext(AuthContext)
+        const location = useLocation();
+        const navigate = useNavigate();
+          const from = location?.state?.pathname || '/';
 
     const handleRegistration = (e) => {
       e.preventDefault();
         const form = e.target;
-         const name = form.name.value;
-         const image = form.photo.value;
+         const displayName = form.displayName.value;
+         const photoURL = form.photoURL.value;
          const email = form.email.value;
          const password = form.password.value;
       
-    //  console.log({name, image, email, password})
+    //  console.log({displayName, image, email, password})
      createUserWithEmail(email, password)
+        
      .then(result =>{ 
+        upDateUserProfileNow(displayName, photoURL)
         setUser(result.user),
         console.log(result.user)
+        navigate(from, {replace:true})
      })
        .catch((error) => {
          const errorCode = error.code;
          const errorMessage = error.message;
          // ..
        });
-         console.log({name, image, email, password})
+         console.log({displayName, photoURL, email, password})
   }
+
+
+
     return (
         <div className="min-h-screen bg-base-200 flex items-center justify-center">
             <div className="hero-content flex-col lg:flex-row-reverse">
@@ -54,7 +63,7 @@ const Register = () => {
                                 <span className="label-text">User Name</span>
                             </label>
                             <input
-                                name="name"
+                                name="displayName"
                                 type="text"
                                 placeholder="User Name"
                                 className="input input-bordered"
@@ -67,7 +76,7 @@ const Register = () => {
                                 <span className="label-text">Photo UrL</span>
                             </label>
                             <input
-                                name="photo"
+                                name="photoURL"
                                 type="url"
                                 placeholder="Photo UrL"
                                 className="input input-bordered"

@@ -32,7 +32,8 @@ return (
                     </ul>
                 </div>
             </div>
-            <div className="navbar-center hidden lg:flex">
+             <div className="navbar-center "> {/* eita sudhu kaj korar subudar jonne */}
+            {/* <div className="navbar-center hidden lg:flex"> */}
                 <NavLink to='/' className="btn btn-ghost text-xl">Home</NavLink>
                 <NavLink to='/login' className="btn btn-ghost text-xl">LogIn</NavLink>
                 <NavLink to='/register' className="btn btn-ghost text-xl">Register</NavLink>
@@ -40,7 +41,7 @@ return (
             </div>
 
             <div className="navbar-end">
-                {user ? <div className=""><h1>{user?.email}</h1>
+                {user ? <div className=""><NavLink to='/profile'>{user?.email}</NavLink>
                     <button onClick={handleLogOut} className="btn btn-ghost btn-circle">
                         Log Out
                     </button>
